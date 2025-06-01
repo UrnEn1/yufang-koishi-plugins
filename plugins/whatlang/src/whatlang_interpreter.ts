@@ -114,7 +114,8 @@ const repr_formatting : (x : any) => string = (x : any) => {
             i => Array.isArray(i) && i == x ? "stack@" : repr_formatting(i)
         ).join(" ") + "]"
     } else if (typeof x == "string") {
-        if (/^[a-zA-Z][a-zA-Z0-9_]*$/.test(x)) return x
+        if (x.length == 1) return "'" + x
+        else if (/^[a-zA-Z][a-zA-Z0-9_]*$/.test(x)) return x.match(/[A-Z]/) ? '"' + x + '"' : x
         else if (is_valid_paren_string(x)) return "(" + x + ")"
         else return '"' + (x
             .replace('"', '\\"')
